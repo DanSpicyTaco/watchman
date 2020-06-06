@@ -6,24 +6,63 @@
 # Using AES-128 - so we need a 16 byte key
 
 from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad, unpad
 from datetime import datetime
 import secrets
 
 
 class Encryption:
-    def __init__(self, time):
-        self._key = self.__generate_key(time)
-        self._cipher = AES.new(self._key, AES.MODE_CBC)
-        print(f'Key: {self._key }')
+    def __init__(self, time=None, key=None, IV=None):
+        '''
+        Class Constructor
+        @param time: time used to generate a new cipher
+        @param key: key to generate a new cipher
+        @param iv: iv from an existing cipher
+        '''
+
+        if time is None:
+            self._key = key
+            self._IV = IV
+            self._cipher = AES.new(self._key, AES.MODE_CBC, self._IV)
+        else:
+            self._key = self.__generate_key(time)
+            self._cipher = AES.new(self._key, AES.MODE_CBC)
+            self._IV = self._cipher.iv
+
+        print(f'Encryption initialised:\n\tKey: {self._key}\n\tIV: {self._IV}')
 
     def __generate_key(self, time):
-        # Get 16 random characters from the time
+        '''
+        Generates a 16 byte key from a datetime string
+        '''
         key_string = ''.join(secrets.choice(time) for i in range(16))
-        key = str.encode(key_string)  # encode the string as bytes
+        key = str.encode(key_string)
         return key
 
-    def encrypt(self, message):
-        pass
+    def export_keys(self):
+        '''
+        Returns the key and IV used by this object's cipher
+        '''
+        return {
+            "key": self._key,
+            "IV": self._IV
+        }
 
-    def decrypt(self, message):
-        pass
+    def encrypt(self, data):
+        '''
+        Returns encrypted version of data (byte-string)
+        '''
+        # Convert the data to bytes if it isn't already
+        if isinstance(data, bytes):
+            byte_data = data
+        else:
+            byte_data = str.encode(data)
+
+        return self._cipher.encrypt(pad(byte_data, AES.block_size))
+
+    def decrypt(self, encrypted_data):
+        '''
+        Returns decrypted version of data (byte-string)
+        '''
+        cipher = AES.new(self._key, AES.MODE_CBC, iv=self._IV)
+        return unpad(cipher.decrypt(encrypted_data), AES.block_size).decode()

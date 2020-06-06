@@ -3,7 +3,7 @@
 class Network:
     def __init__(self):
         # self.port
-        print("hello!")
+        print("Network initialised")
         pass
 
     def send(self, message):
