@@ -1,5 +1,6 @@
+from datetime import datetime
 import encryption
 import network
 
 network.Network()
-encryption.Encryption(1)
+encryption.Encryption(datetime.now().isoformat())
