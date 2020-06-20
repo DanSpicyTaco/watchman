@@ -1,3 +1,5 @@
+# Receiver (laptop) script for the ECA
+
 from datetime import datetime
 from random import randrange
 import encryption
@@ -25,15 +27,12 @@ def authenticate(encryptor):
 # Create the encryptor
 current_time = datetime.now().isoformat()
 encryptor = encryption.Encryption(time=current_time)
-keys = encryptor.export_keys()
 
 # Set up communication
-network.Network()
+watchman = network.Network()
 
 # Send the keys to the Watchman
-
-# Do this in the Pi
-# encryptor2 = encryption.Encryption(key=keys["key"], IV=keys["IV"])
+keys = encryptor.export_keys()
 
 # Main loop
 
