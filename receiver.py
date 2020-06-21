@@ -3,20 +3,24 @@ from random import randrange
 import encryption
 import network
 import time
-import argparse
+import subprocess
 
-# Command Line Arguments setup
-parser = argparse.ArgumentParser(
-    description='GCS (laptop) script for the ECA. Run sender.py on the Watchman before this.')
-parser.add_argument('addr', metavar='IP', type=str,
-                    help='The IP address of the Watchman.')
-parser.add_argument('port', metavar='P', type=int,
-                    help='The port of the Watchman.')
+# NAME = "raspberrypi"
+NAME = "Dans-Air-4.hub"
 
-# Get the port and IP of the sender (watchman)
-args = parser.parse_args()
-addr = args.addr
-port = args.port
+# Get the IP address of this machine
+output = subprocess.check_output(
+    "nmap -sn 192.168.1.0/24 -oG - 192.168.1", shell=True)
+hosts = output.decode().split("\n")[1:-1]
+
+for host in hosts:
+    info = host.split(" ")
+    name = info[2].split("\t")[0][1:-1]
+
+    if name == NAME:
+        addr = info[1]
+        port = 3000
+        break
 
 # Initialisation - when the UAV is on the ground
 

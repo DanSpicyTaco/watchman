@@ -15,7 +15,8 @@ Provides continuous authentication between a GCS and Watchman onboard a UAV.
 [X] Encryption
 [X] Networking
 [X] Authentication loop
-[] Find the IP address and port of the Pi
+[X] Find the IP address and port of the Pi
+[] Rasperry Pi installation script
 [] Send IDS alert
 
 ## Testing
