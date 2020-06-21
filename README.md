@@ -1,12 +1,22 @@
-# ECALaptop
-
-GCS for the ECA - Laptop
+# ECA
 
 ## What is this?
 
-The laptop part of the Ground Station Control for the [Encrypted Channel Architecture](https://ieeexplore.ieee.org/document/7926571/).
-The laptop synchronises with the Watchman (Raspberry Pi) before takeoff.
-During flight, the laptop and Watchman run an authentication loop as well as an IDS.
+An implementation of part of the [Encrypted Channel Architecture](https://ieeexplore.ieee.org/document/7926571/).
+Provides continuous authentication between a GCS and Watchman onboard a UAV.
+
+## How Do I run it?
+
+1. Run `sender.py` on the Watchman
+2. Run `receiver.py` on the laptop
+
+## Tasks
+
+[X] Encryption
+[X] Networking
+[X] Authentication loop
+[] Find the IP address and port of the Pi
+[] Send IDS alert
 
 ## Testing
 

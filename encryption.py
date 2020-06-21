@@ -23,11 +23,13 @@ class Encryption:
         if time is None:
             self._key = key
             self._IV = IV
-            self._cipher = AES.new(self._key, AES.MODE_CBC, self._IV)
+            self._encrypt = AES.new(self._key, AES.MODE_CBC, self._IV)
+            self._decrypt = AES.new(self._key, AES.MODE_CBC, self._IV)
         else:
             self._key = self.__generate_key(time)
-            self._cipher = AES.new(self._key, AES.MODE_CBC)
-            self._IV = self._cipher.iv
+            self._encrypt = AES.new(self._key, AES.MODE_CBC)
+            self._IV = self._encrypt.iv
+            self._decrypt = AES.new(self._key, AES.MODE_CBC, iv=self._IV)
 
         print(f'Encryption initialised:\n\tKey: {self._key}\n\tIV: {self._IV}')
 
@@ -58,11 +60,10 @@ class Encryption:
         else:
             byte_data = str.encode(data)
 
-        return self._cipher.encrypt(pad(byte_data, AES.block_size))
+        return self._encrypt.encrypt(pad(byte_data, AES.block_size))
 
     def decrypt(self, encrypted_data):
         '''
         Returns decrypted version of data (byte-string)
         '''
-        cipher = AES.new(self._key, AES.MODE_CBC, iv=self._IV)
-        return unpad(cipher.decrypt(encrypted_data), AES.block_size).decode()
+        return unpad(self._decrypt.decrypt(encrypted_data), AES.block_size).decode()
