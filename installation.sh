@@ -14,6 +14,12 @@ git clone git@github.com:DanSpicyTaco/ECA.git eca
 cd eca
 pip3 install -r requirements.txt
 
+# Enable the wait for network service
+# This will wait until the network is connected 
+# before starting the sender service every bootup
+sudo cp network-wait-online.service
+sudo systemctl enable network-wait-online.service
+
 # Enable the sender service
 sudo cp sender.service /etc/systemd/system/sender.service
 sudo systemctl enable sender.service
