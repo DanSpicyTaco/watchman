@@ -3,8 +3,7 @@ import network
 import time
 import subprocess
 
-# NAME = "raspberrypi"
-NAME = "Dans-Air-4.hub"
+NAME = "raspberrypi.hub"
 
 # Get the IP address of this machine
 output = subprocess.check_output(
