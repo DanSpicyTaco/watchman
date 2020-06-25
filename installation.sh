@@ -17,7 +17,7 @@ pip3 install -r requirements.txt
 # Enable the wait for network service
 # This will wait until the network is connected 
 # before starting the sender service every bootup
-sudo cp network-wait-online.service
+sudo cp network-wait-online.service /etc/systemd/system/network-wait-online.service
 sudo systemctl enable network-wait-online.service
 
 # Enable the sender service
