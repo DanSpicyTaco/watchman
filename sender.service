@@ -1,0 +1,14 @@
+[Unit]
+Description=Sender
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 -u sender.py
+WorkingDirectory=/home/dan/eca
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=dan
+
+[Install]
+WantedBy=multi-user.target
