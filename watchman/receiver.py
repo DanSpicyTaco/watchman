@@ -1,9 +1,8 @@
 from datetime import datetime
 from random import randrange
-import encryption
-import network
 import time
 import subprocess
+from lib import encryption, network
 
 NAME = "raspberrypi.hub"
 

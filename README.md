@@ -46,7 +46,7 @@ Provides continuous authentication between a GCS and Watchman onboard a UAV.
 
 1. Create a new [SSH key](https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key).
 2. Copy it to the Pi: `scp <LOCATION>/id_rsa* <USER>@raspberrypi:~/.ssh`
-3. Copy the installation script: `scp installation.sh <USER>@raspberrypi:~/`
+3. Copy the installation script: `scp config/installation.sh <USER>@raspberrypi:~/`
 4. Run the script: `ssh -t <USER>@raspberrypi 'sh installation.sh'`
 
 ## Testing

@@ -1,5 +1,4 @@
-import encryption
-import network
+from lib import encryption, network
 import time
 import subprocess
 

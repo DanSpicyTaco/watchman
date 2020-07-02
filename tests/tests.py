@@ -1,6 +1,6 @@
 import unittest
 from datetime import datetime
-import encryption
+from lib import encryption
 
 
 class TestEncryption(unittest.TestCase):
