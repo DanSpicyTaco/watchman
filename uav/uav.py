@@ -25,7 +25,12 @@ from lib import network
 # gcs = network.Server((addr, port))
 gcs = network.Server(('127.0.0.1', 3001))
 
-data = b''
-while data.decode() != "exit":
-    data = gcs.receive(20)
-    print(data.decode())
+with open('./log/eca.log', 'a') as logfile:
+    data = ''
+    while data != "0":
+        byte_data = gcs.receive(20)
+        data = str(int.from_bytes(byte_data, byteorder="big"))
+
+        # Save the data to a logfile
+        logfile.write(f'{data} ')
+        print(data)

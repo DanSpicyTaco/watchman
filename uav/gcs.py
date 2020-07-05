@@ -112,7 +112,8 @@ def send_key(uav, key):
     ]
 
     if key in valid_keys:
-        uav.send(bytes(key))
+        key_bytes = key.to_bytes(2, byteorder="big")
+        uav.send(key_bytes)
 
 
 # NAME = "raspberrypi.hub"
@@ -146,4 +147,4 @@ with Screen() as screen:
         send_key(uav, key)
 
     # Close communication
-    uav.send(b"exit")
+    # uav.send(b"exit")
