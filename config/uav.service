@@ -1,0 +1,15 @@
+[Unit]
+Description=UAV
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart=/usr/bin/python3 -u uav.py
+WorkingDirectory=/home/dan/eca/uav
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=dan
+
+[Install]
+WantedBy=multi-user.target
