@@ -1,25 +1,14 @@
-# Send video stream & receive flight commands
-
+# import cv2
+# import pickle
+import queue
+# import struct
 import subprocess
 import threading
-import queue
-import cv2
-import time
-import struct
-import pickle
 from lib import network
 
 
 def video_stream(gcs, msgs):
-    webcam = cv2.VideoCapture(0)
-
-    if webcam.isOpened():
-        ret, frame = webcam.read()
-    else:
-        ret = False
-
-    # ! For now, sliently fail if no webcam is found
-    ret = False
+    # webcam = cv2.VideoCapture(0)
 
     # Send "video stream" (random 6 bit string) to UAV
     while True:
@@ -31,25 +20,19 @@ def video_stream(gcs, msgs):
 
         if item == "q":
             msgs.task_done()
-            webcam.release()
+            # webcam.release()
             break
 
-        # Get the next video frame
-        if ret == False:
-            frame = 1
-        else:
-            ret, frame = webcam.read()
+        # # Get the next video frame
+        # ret, frame = webcam.read()
 
-        # Serialize it and get the length
-        data = pickle.dumps(frame)
-        message_size = struct.pack("=L", len(data))
+        # # Serialize it and get the length
+        # data = pickle.dumps(frame)
+        # message_size = struct.pack("=L", len(data))
 
-        # Send message_size & data
+        # # Send message_size & data
         # gcs.send(message_size + data)
-        gcs.send(message_size)
-        time.sleep(1)
-
-    webcam.release()
+        gcs.send("videostream")
 
 
 NAME = "raspberrypi.hub"

@@ -1,14 +1,10 @@
-# Send flight commands to the pi
-# Receive video stream
-
 import curses
-import subprocess
+# import cv2
+# import pickle
 import queue
+# import struct
+import subprocess
 import threading
-import cv2
-import time
-import pickle
-import struct
 from lib import network
 
 
@@ -106,7 +102,7 @@ class Screen:
         self._uplink.refresh()
 
     def video(self, uav, msgs):
-        payload_size = struct.calcsize("=L")
+        # payload_size = struct.calcsize("=L")
         counter = 1
         while True:
             # Attempt to get a new item from the messages queue
@@ -125,13 +121,12 @@ class Screen:
             else:
                 counter += 1
 
-            # Get the next frame's length
-            data = uav.receive(payload_size)
-            packed_msg_size = data[:payload_size]
-            data = data[payload_size:]
-            msg_size = struct.unpack("=L", packed_msg_size)[0]
+            # # Get the next frame's length
+            # data = uav.receive(payload_size)
+            # packed_msg_size = data[:payload_size]
+            # data = data[payload_size:]
+            # msg_size = struct.unpack("=L", packed_msg_size)[0]
 
-            # TODO this is broken
             # # Get the next frame
             # data += uav.receive(msg_size)
             # frame_data = data[:msg_size]
@@ -145,9 +140,9 @@ class Screen:
             # cv2.waitKey(25)
 
             # Add the length to the downlink box
-            self._downlink.addstr(counter, 1, str(msg_size))
+            data = uav.receive(20)
+            self._downlink.addstr(counter, 1, data.decode())
             self._downlink.refresh()
-            time.sleep(1)
 
     def __exit__(self, exc_type, exc_value, traceback):
         curses.endwin()
