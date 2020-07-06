@@ -32,7 +32,7 @@ def video_stream(gcs, msgs):
 
         # # Send message_size & data
         # gcs.send(message_size + data)
-        gcs.send("videostream")
+        gcs.send(b"videostream")
 
 
 NAME = "raspberrypi.hub"
