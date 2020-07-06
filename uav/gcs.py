@@ -2,13 +2,21 @@
 # Receive video stream
 
 import curses
-import time
 import subprocess
+import queue
+import threading
+import cv2
+import time
+import pickle
+import struct
 from lib import network
 
 
 class Screen:
     def __init__(self):
+        # Initialise
+        # cv2.namedWindow("DOWNLINK")
+
         # Initialise curses screen
         self._screen = curses.initscr()
         curses.start_color()
@@ -73,7 +81,7 @@ class Screen:
         self._downlink.refresh()
 
     ##
-    # Movement
+    # Uplink and Downlink
     ##
     def move_joystick(self, key):
         self.uplink()
@@ -97,8 +105,53 @@ class Screen:
 
         self._uplink.refresh()
 
+    def video(self, uav, msgs):
+        payload_size = struct.calcsize("=L")
+        counter = 1
+        while True:
+            # Attempt to get a new item from the messages queue
+            try:
+                item = msgs.get(False)
+            except queue.Empty:
+                item = None
+
+            if item == "q":
+                msgs.task_done()
+                break
+
+            # Make sure the counter is within the box dimensions
+            if counter >= 8:
+                counter = 2
+            else:
+                counter += 1
+
+            # Get the next frame's length
+            data = uav.receive(payload_size)
+            packed_msg_size = data[:payload_size]
+            data = data[payload_size:]
+            msg_size = struct.unpack("=L", packed_msg_size)[0]
+
+            # TODO this is broken
+            # # Get the next frame
+            # data += uav.receive(msg_size)
+            # frame_data = data[:msg_size]
+            # data = data[msg_size:]
+
+            # # # Extract it
+            # frame = pickle.loads(frame_data)
+
+            # # Display it
+            # cv2.imshow('DOWNLINK', frame)
+            # cv2.waitKey(25)
+
+            # Add the length to the downlink box
+            self._downlink.addstr(counter, 1, str(msg_size))
+            self._downlink.refresh()
+            time.sleep(1)
+
     def __exit__(self, exc_type, exc_value, traceback):
         curses.endwin()
+        # cv2.destroyWindow("DOWNLINK")
 
 
 def send_key(uav, key):
@@ -116,28 +169,30 @@ def send_key(uav, key):
         uav.send(key_bytes)
 
 
-# NAME = "raspberrypi.hub"
+NAME = "raspberrypi.hub"
 
-# # Get the IP address of this machine
-# output = subprocess.check_output(
-#     "nmap -sn 192.168.1.0/24 -oG - 192.168.1", shell=True)
-# hosts = output.decode().split("\n")[1:-1]
+# Get the IP address of this machine
+output = subprocess.check_output(
+    "nmap -sn 192.168.1.0/24 -oG - 192.168.1", shell=True)
+hosts = output.decode().split("\n")[1:-1]
 
-# for host in hosts:
-#     info = host.split(" ")
-#     name = info[2].split("\t")[0][1:-1]
+for host in hosts:
+    info = host.split(" ")
+    name = info[2].split("\t")[0][1:-1]
 
-#     if name == NAME:
-#         addr = info[1]
-#         port = 3030
-#         break
+    if name == NAME:
+        addr = info[1]
+        port = 3030
+        break
 
 # Set up communication
-# uav = network.Client((addr, port))
-uav = network.Client(('127.0.0.1', 3001))
+uav = network.Client((addr, port))
 
 with Screen() as screen:
-    # TODO Create thread for receiving downlink
+    # Create thread for receiving downlink
+    msgs = queue.Queue()
+    downlink = threading.Thread(target=screen.video, args=(uav, msgs))
+    downlink.start()
 
     # Send the key to the uav
     key = ''
@@ -146,5 +201,6 @@ with Screen() as screen:
         screen.move_joystick(key)
         send_key(uav, key)
 
-    # Close communication
-    # uav.send(b"exit")
+    # Wait for the downlink thread to close
+    msgs.put("q")
+    msgs.join()

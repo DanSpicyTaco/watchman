@@ -19,10 +19,13 @@ class Client:
         # print(f"Sent {message}")
 
     def receive(self, bufsize):
-        data = self.socket.recv(bufsize)
+        data = b''
+        while len(data) < bufsize:
+            packet = self.socket.recv(4096)
+            if not packet:
+                break
+            data += packet
 
-        if not data:
-            return ''
         return data
 
     def close(self):
