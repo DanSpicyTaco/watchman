@@ -1,4 +1,8 @@
 autopep8==1.5.3
+-e git+git@github.com:DanSpicyTaco/ECALaptop.git@fcbe31b3376b98b628bcaf84a92d8add4ae1fc15#egg=eca
+numpy==1.19.0
+opencv-python==4.2.0.34
 pycodestyle==2.6.0
 pycryptodome==3.9.7
+simplejson==3.17.0
 toml==0.10.1
