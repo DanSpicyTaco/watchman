@@ -66,7 +66,6 @@ with open('./log/eca.log', 'a') as logfile:
         byte_data = gcs.receive(20)
         data = str(int.from_bytes(byte_data, byteorder="big"))
         logfile.write(f'{data} ')
-        print(data)
 
 # Allow the downlink thread to quit
 msgs.put("q")
