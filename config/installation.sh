@@ -8,10 +8,10 @@ sudo apt-get install $PACKAGES -y
 
 # Setup git and the eca repo
 ssh-keyscan github.com >> /home/dan/.ssh/known_hosts
-git clone git@github.com:DanSpicyTaco/ECA.git eca
+git clone git@github.com:DanSpicyTaco/watchman.git watchman
 
 # Install the requirements
-cd eca
+cd watchman
 pip3 install -r requirements.txt
 
 # Enable the wait for network service
