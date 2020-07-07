@@ -13,7 +13,9 @@ Watchman is based on the a research paper that outlines the [Encrypted Channel A
 Watchman is a proof-of-concept tool.
 As such, it has a very bare-bones architecture.
 
-<!-- TODO -->
+<pre align="center">
+   <img src="img/architecture.png">
+</pre>
 
 ## Setup
 
