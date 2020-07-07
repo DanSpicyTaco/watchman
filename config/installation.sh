@@ -13,6 +13,7 @@ git clone git@github.com:DanSpicyTaco/watchman.git watchman
 # Install the requirements
 cd watchman
 pip3 install -e .
+pip3 install -r requirements
 
 # Enable the wait for network service
 # This will wait until the network is connected 
@@ -25,6 +26,6 @@ sudo cp config/sender.service /etc/systemd/system/sender.service
 sudo systemctl enable sender.service
 
 # Enable the UAV service
-sudo cp config/sender.service /etc/systemd/system/uav.service
+sudo cp config/uav.service /etc/systemd/system/uav.service
 sudo systemctl enable uav.service
 
