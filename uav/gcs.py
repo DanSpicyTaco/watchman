@@ -5,6 +5,7 @@ import queue
 # import struct
 import subprocess
 import threading
+import time
 from lib import network
 
 
@@ -140,9 +141,9 @@ class Screen:
             # cv2.waitKey(25)
 
             # Add the length to the downlink box
-            data = uav.receive(20)
-            self._downlink.addstr(counter, 1, data.decode())
+            self._downlink.addstr(counter, 1, "videostream")
             self._downlink.refresh()
+            time.sleep(1)
 
     def __exit__(self, exc_type, exc_value, traceback):
         curses.endwin()
