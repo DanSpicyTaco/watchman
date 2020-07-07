@@ -1,27 +1,25 @@
-# ECA
+# Watchman
 
-## What is this?
+<pre align="center">
+   <img src="img/watchman.png">
+</pre>
 
-An implementation of part of the [Encrypted Channel Architecture](https://ieeexplore.ieee.org/document/7926571/).
-Provides continuous authentication between a GCS and Watchman onboard a UAV.
+Watchman secures communication between a drone (Unmanned Ariel Vehicle, UAV) and its controller (Ground Control Station, GCS).
+It does this by creating a second, encrypted communication channel, which provides continuos authentication and network intrusion detection.
+Watchman is based on the a research paper that outlines the [Encrypted Channel Architecture](https://ieeexplore.ieee.org/document/7926571/).
 
-## Tasks
+## Architecture
 
-- [x] Encryption
+Watchman is a proof-of-concept tool.
+As such, it has a very bare-bones architecture.
 
-- [x] Networking
+<!-- TODO -->
 
-- [x] Authentication loop
+## Setup
 
-- [x] Find the IP address and port of the Pi
+### Raspberry Pi
 
-- [x] Rasperry Pi installation script
-
-- [ ] Send IDS alert
-
-## Setting up the Raspberry Pi
-
-### Setup
+#### Setup
 
 1. Download the Raspberry Pi OS onto the Pi using the [Raspberry Pi Imager](https://www.raspberrypi.org/downloads/).
 2. Insert the `wpa_supplicant.conf` file into the boot folder to allow connection to the LAN.
@@ -42,7 +40,7 @@ Provides continuous authentication between a GCS and Watchman onboard a UAV.
    ```
    And run `sudo service ssh reload`.
 
-### Installation script
+#### Installation
 
 1. Create a new [SSH key](https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key).
 2. Copy it to the Pi: `scp <LOCATION>/id_rsa* <USER>@raspberrypi:~/.ssh`
@@ -58,3 +56,5 @@ python -m unittest -b
 ```
 
 Append `-v` for a verbose output
+
+<!-- TODO: License and Contribution -->
