@@ -25,24 +25,37 @@ This effectively causes a denial of service.
 
 1. Connect the ALFA network adapter to the Kali computer.
    Check that the network adapter is connected by running `iwconfig`.
-   Note the name of the connection.
-   In this case, it is `wlan0`
-   <!-- TODO: insert picutre -->
-2. Kill any process that may interfere with the attacks with `aircrack-ng check kill`.
+   Note the name of the connection - in this case, it is `wlan0`
+   <pre align="center">
+      <img src="img/deauth_iwconfig1.png">
+   </pre>
+
+2. Kill any process that may interfere with the attacks with `airmon-ng check kill`.
    This may include Wi-Fi processes running for the Linux OS.
-   <!-- TODO: insert picutre -->
-3. Put the network adapter into _monitor mode_.
+   <pre align="center">
+      <img src="img/deauth_kill.png">
+   </pre>
+3. Put the network adapter into _monitor mode_ with `airmon-ng start <NETWORK INTERFACE>`, where network interface is the equivalent of `wlan0`.
+   <pre align="center">
+      <img src="img/deauth_start.png">
+   </pre>
    This will allow the attacker to inject (i.e. send) network packets to other stations.
    Double check the adapter is in monitor mode by running `iwconfig` again.
-   <!-- TODO: insert picutre -->
-4. Find the the access point (AP) of interest with `airodump-ng <NETWORK INTERFACE>`, where network interface is the equivalent of `wlan0`.
-   <!-- TODO: insert picutre -->
+   <pre align="center">
+      <img src="img/deauth_iwconfig2.png">
+   </pre>
+4. Find the the access point (AP) of interest with `airodump-ng <NETWORK INTERFACE>`.
+   <pre align="center">
+      <img src="img/deauth_scan.png">
+   </pre>
    Press `CTRL + C` once the AP has been found.
    The AP can be identified by the ESSID column, which represents the name of the AP.
    Note down the BSSID (unique identifier) and channel of the AP.
 5. Now, find the MAC address of the target station (i.e. the Raspberry Pi).
    Do this by running `airodrump-ng <NETWORK INTERFACE> --bssid <NETWORK BSSID> -c <NETWORK CHANNEL>`.
-   <!-- TODO: insert picutre -->
+   <pre align="center">
+      <img src="img/deauth_pi.png">
+   </pre>
    Note down the MAC address of the station.
 
 ### Attack
@@ -54,7 +67,9 @@ This effectively causes a denial of service.
    <!-- TODO: insert picutre -->
 3. On the attacker, ensure `airodrump-ng <NETWORK INTERFACE> --bssid <NETWORK BSSID> -c <NETWORK CHANNEL>` is running on one terminal.
    Open a new terminal and run the deauthentication attack: `aireplay-ng --deauth 0 -c <STATION MAC ADDR> -a <NETWORK BSSID> <NETWORK INTERFACE>`.
-   <!-- TODO: insert picutre -->
+   <pre align="center">
+      <img src="img/deauth_attack.png">
+   </pre>
 
 ## Results
 
