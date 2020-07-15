@@ -57,6 +57,7 @@ This effectively causes a denial of service.
       <img src="img/deauth_pi.png">
    </pre>
    Note down the MAC address of the station.
+   For example, MAC addresses starting with _DC-A6-32_ are Raspberry Pis. [Source](https://cleancss.com/mac-lookup/DC-A6-32)
 
 ### Attack
 

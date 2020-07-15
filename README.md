@@ -49,6 +49,13 @@ As such, it has a very bare-bones architecture.
 3. Copy the installation script: `scp config/installation.sh <USER>@raspberrypi:~/`
 4. Run the script: `ssh -t <USER>@raspberrypi 'sh installation.sh'`
 
+## Attacks
+
+To test the viability of watchman compared to the current architecture used in UAS, some basic attacks were run.
+They are outlined here:
+
+- [Deauthentication Attack](attacks/deauthentication.md)
+
 ## Testing
 
 For running some basic unit tests, run:
