@@ -3,8 +3,6 @@ setup.py
 lib/__init__.py
 lib/encryption.py
 lib/network.py
-tests/__init__.py
-tests/tests.py
 uav/__init__.py
 uav/gcs.py
 uav/uav.py
