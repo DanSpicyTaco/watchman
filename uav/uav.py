@@ -59,13 +59,24 @@ msgs = queue.Queue()
 downlink = threading.Thread(target=video_stream, args=(gcs, msgs))
 downlink.start()
 
+DATA_TO_COMMAND = {
+    '260': 'l',
+    '261': 'r',
+    '259': 'f',
+    '258': 'b',
+    '97': 'u',
+    '115': 'd',
+    '0': 's',
+}
+
 # Log all uplink commands to eca.log
-with open('./log/eca.log', 'a') as logfile:
+with open('/home/dan/watchman/log/eca.log', 'w') as logfile:
     data = ''
     while data != "0":
         byte_data = gcs.receive(20)
         data = str(int.from_bytes(byte_data, byteorder="big"))
-        logfile.write(f'{data} ')
+        logfile.write(f'{DATA_TO_COMMAND[data]}')
+        # logfile.write(f'{data} ')
 
 # Allow the downlink thread to quit
 msgs.put("q")
