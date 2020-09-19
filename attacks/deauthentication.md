@@ -8,6 +8,10 @@ As management frames are usually unencrypted, the station will think it is a leg
 A deauthentication attack involves flooding the network with lots of fake deauthentication messages, such that the target station is unable to connect back to the router.
 This effectively causes a denial of service.
 
+<pre align="center">
+   <img src="img/deauth_diagram.png">
+</pre>
+
 ## Materials
 
 - Attacker setup:
@@ -71,20 +75,3 @@ This effectively causes a denial of service.
    <pre align="center">
       <img src="img/deauth_attack.png">
    </pre>
-
-## Results
-
-### Current Architecture
-
-It was expected that the CA would crash, as the connection between the GCS and UAV stopped.
-
-### Watchman
-
-It was expected that the Watchman would not crash, as the IDS would notify the GCS of an attempted attack.
-
-### Simulation
-
-<!-- TODO -->
-
-The logfile from the attack was saved and made into a simulation.
-More to come later.
