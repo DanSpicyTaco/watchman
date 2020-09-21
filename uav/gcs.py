@@ -1,8 +1,5 @@
 import curses
-# import cv2
-# import pickle
 import queue
-# import struct
 import subprocess
 import threading
 import time

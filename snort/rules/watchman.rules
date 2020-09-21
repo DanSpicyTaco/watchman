@@ -1,0 +1,1 @@
+alert tcp any any -> 192.168.0.0/24 any (msg:"Test alert";sid:1000000; rev:0;)

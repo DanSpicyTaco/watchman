@@ -53,3 +53,4 @@
   - Capacity was not super relevant to measuring the effectiveness of the attack
 - Network resilience was unfairly weighted towards the watchman architecture
 - To account for this, the battery life, weight and processing power were also considered as separate metrics
+- If the watchman channel was attacked, the system would break

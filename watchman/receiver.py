@@ -2,6 +2,7 @@ from datetime import datetime
 from random import randrange
 import time
 import subprocess
+import os
 from lib import encryption, network
 
 NAME = "raspberrypi.hub"
@@ -38,6 +39,10 @@ watchman.send(keys["IV"])
 data = watchman.receive(20)
 print(data.decode())
 
+# Start Snort
+os.chdir('../snort')
+snort = subprocess.Popen(['sh', 'snort.sh'], stdout=subprocess.PIPE)
+
 # Main loop
 while True:
     # Generate a random index between 0 and 100
@@ -56,10 +61,16 @@ while True:
     decrypted_index = encryptor.decrypt(received_index)
 
     if int(index) != int(decrypted_index):
-        # TODO Send an intrusion detection alert
+        print("\nWatchman communication channel has been tampered")
         break
     else:
         print('.', flush=True, end=" ")
+
+    # An intrusion was found - break
+    if snort.poll() is not None:
+        print(f"\nIntrusion detected:\n{snort.stdout.readline().decode()}")
+        watchman.send(encryptor.encrypt('Channel attacked'))
+        break
 
     time.sleep(1)
 

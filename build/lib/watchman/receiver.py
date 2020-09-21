@@ -38,6 +38,12 @@ watchman.send(keys["IV"])
 data = watchman.receive(20)
 print(data.decode())
 
+# Start Snort
+snort = subprocess.Popen(['sh', '../snort/test.sh'])
+
+# Allow the user to start flying
+print('Watchman setup! You can start flying now.')
+
 # Main loop
 while True:
     # Generate a random index between 0 and 100
@@ -56,10 +62,13 @@ while True:
     decrypted_index = encryptor.decrypt(received_index)
 
     if int(index) != int(decrypted_index):
-        # TODO Send an intrusion detection alert
         break
     else:
         print('.', flush=True, end=" ")
+
+    # An intrusion was found - break
+    if snort.poll() is not None:
+        break
 
     time.sleep(1)
 

@@ -65,8 +65,7 @@ DATA_TO_COMMAND = {
     '259': 'f',
     '258': 'b',
     '97': 'u',
-    '115': 'd',
-    '0': 's',
+    '115': 'd'
 }
 
 # Log all uplink commands to eca.log

@@ -38,9 +38,14 @@ laptop.send(b'Watchman initialised')
 while True:
     received_index = laptop.receive(16)
 
-    # print(received_index)
-
     decrypted_index = encryptor.decrypt(received_index)
+
+    # Channel has been attacked, safely land
+    if(decrypted_index == "Channel attacked"):
+        with open('/home/dan/watchman/log/eca.log', 'w') as logfile:
+            logfile.write('s')
+        break
+
     encrypted_index = encryptor.encrypt(decrypted_index)
     laptop.send(encrypted_index)
 
