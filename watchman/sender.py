@@ -46,7 +46,7 @@ while True:
         # Channel has been attacked, safely land
         if(received_index.decode() == "Channel attacked"):
             with open('/home/dan/watchman/log/eca.log', 'a') as logfile:
-                logfile.write('s')
+                logfile.write('H')
             break
 
     time.sleep(1)

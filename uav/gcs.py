@@ -3,6 +3,7 @@ import queue
 import subprocess
 import threading
 import time
+import sys
 from lib import network
 
 
@@ -162,6 +163,25 @@ def send_key(uav, key):
         uav.send(key_bytes)
 
 
+def press_key(uav, key, seconds):
+    COMMAND_TO_DATA = {
+        'l': curses.KEY_LEFT,
+        'r': curses.KEY_RIGHT,
+        'f': curses.KEY_UP,
+        'b': curses.KEY_DOWN,
+        'u': ord('a'),
+        'd': ord('s')
+    }
+
+    print(f"Moving {key} for {seconds}s")
+
+    # 'Move' the UAV in the `key` direction for `seconds` seconds
+    original_time = time.time()
+    while(time.time() - original_time < seconds):
+        send_key(uav, COMMAND_TO_DATA[key])
+        time.sleep(0.1)
+
+
 NAME = "raspberrypi.hub"
 
 # Get the IP address of this machine
@@ -181,19 +201,27 @@ for host in hosts:
 # Set up communication
 uav = network.Client((addr, port))
 
-with Screen() as screen:
-    # Create thread for receiving downlink
-    msgs = queue.Queue()
-    downlink = threading.Thread(target=screen.video, args=(uav, msgs))
-    downlink.start()
+# Automatic method
+if(sys.argv[1] == "-a" or sys.argv[1] == "--automate"):
+    press_key(uav, 'u', 3)
+    press_key(uav, 'f', 10)
+    press_key(uav, 'l', 10)
+    press_key(uav, 'f', 10)
+    press_key(uav, 'd', 3)
+else:
+    with Screen() as screen:
+        # Create thread for receiving downlink
+        msgs = queue.Queue()
+        downlink = threading.Thread(target=screen.video, args=(uav, msgs))
+        downlink.start()
 
-    # Send the key to the uav
-    key = ''
-    while key != ord('q'):
-        key = screen.getch()
-        screen.move_joystick(key)
-        send_key(uav, key)
+        # Send the key to the uav
+        key = ''
+        while key != ord('q'):
+            key = screen.getch()
+            screen.move_joystick(key)
+            send_key(uav, key)
 
-    # Wait for the downlink thread to close
-    msgs.put("q")
-    msgs.join()
+        # Wait for the downlink thread to close
+        msgs.put("q")
+        msgs.join()

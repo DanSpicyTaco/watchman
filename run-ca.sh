@@ -1,2 +1,2 @@
 cd uav
-python gcs.py
+python gcs.py -a

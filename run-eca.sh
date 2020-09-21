@@ -6,7 +6,7 @@ cd ..
 
 # Open the GCS in a new terminal
 osascript -e 'tell app "Terminal"
-   do script "cd \"/Users/Dan/Documents/OneDrive - UNSW/thesis/watchman/uav\" && echo $$ > pid && python gcs.py"
+   do script "cd \"/Users/Dan/Documents/OneDrive - UNSW/thesis/watchman/uav\" && echo $$ > pid && python gcs.py -a"
 end tell'
 
 # Sleep for 5 seconds to allow the GCS to open
