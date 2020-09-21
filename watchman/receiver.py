@@ -69,7 +69,7 @@ while True:
     # An intrusion was found - break
     if snort.poll() is not None:
         print(f"\nIntrusion detected:\n{snort.stdout.readline().decode()}")
-        watchman.send(encryptor.encrypt('Channel attacked'))
+        watchman.send(b'Channel attacked')
         break
 
     time.sleep(1)
