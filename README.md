@@ -19,6 +19,10 @@ As such, it has a very bare-bones architecture.
 
 ## Setup
 
+### Snort
+
+A Snort extension called [Snort-Wirless](https://web.archive.org/web/20140105033335/http://snort-wireless.org/) was used in experiments to detect attacks on the 802.11 protocol.
+
 ### Raspberry Pi
 
 #### Setup
