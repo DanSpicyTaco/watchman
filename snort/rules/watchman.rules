@@ -1,1 +1,1 @@
-alert tcp any any -> any 80 (msg:"DOS flood denial of service attempt";flow:to_server; detection_filter:track by_dst,  count 60, seconds 60; sid:25101; rev:1;)
+alert tcp any any -> $HOME_NET 3030 (flags: S; msg:"Network Flood Attack"; flow: stateless; threshold: type both, track by_src, count 70, seconds 10; sid:10001; rev:1;)

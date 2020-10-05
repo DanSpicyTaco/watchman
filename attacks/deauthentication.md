@@ -12,17 +12,6 @@ This effectively causes a denial of service.
    <img src="img/deauth_diagram.png">
 </pre>
 
-## Materials
-
-- Attacker setup:
-  - [Kali Linux](https://www.kali.org/downloads/)
-  - ALFA network adapter
-  - [aircrack-ng](https://www.aircrack-ng.org/doku.php?id=Main#download)
-- Current architecture (CA):
-  - [Watchman](../README.md) (`gcs.py`)
-- Watchman (ECA):
-  - [Watchman](../README.md) (`gcs.py` and `receiver.py`)
-
 ## Procedure
 
 ### Setting Up the Attacker
@@ -65,13 +54,16 @@ This effectively causes a denial of service.
 
 ### Attack
 
-1. Ensure that the watchman and UAV are setup.
-   For CA experiments, only run `gcs.py`.
-   For Watchman experiments, run both `gcs.py` and `receiver.py`.
-2. Start "flying" the UAV.
-   <!-- TODO: insert picutre -->
-3. On the attacker, ensure `airodrump-ng <NETWORK INTERFACE> --bssid <NETWORK BSSID> -c <NETWORK CHANNEL>` is running on one terminal.
-   Open a new terminal and run the deauthentication attack: `aireplay-ng --deauth 0 -c <STATION MAC ADDR> -a <NETWORK BSSID> <NETWORK INTERFACE>`.
-   <pre align="center">
-      <img src="img/deauth_attack.png">
-   </pre>
+1.  Run `time sh run-ca.sh` from the base folder.
+    The GCS control interface should appear.
+    <!-- TODO: insert picutre -->
+2.  On the attacker, ensure `airodrump-ng <NETWORK INTERFACE> --bssid <NETWORK BSSID> -c <NETWORK CHANNEL>` is running on one terminal.
+    Open a new terminal and run the deauthentication attack: `aireplay-ng --deauth 0 -c <STATION MAC ADDR> -a <NETWORK BSSID> <NETWORK INTERFACE>`.
+    <pre align="center">
+       <img src="img/deauth_attack.png">
+    </pre>
+3.
+
+# Fixing the issue
+
+Move to the 802.11w protocol - one that uses authenticated management frames.

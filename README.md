@@ -53,11 +53,18 @@ A Snort extension called [Snort-Wirless](https://web.archive.org/web/20140105033
 3. Copy the installation script: `scp config/installation.sh <USER>@raspberrypi:~/`
 4. Run the script: `ssh -t <USER>@raspberrypi 'sh installation.sh'`
 
-**Note: you might need to run `python setup.py install` first!**
+## Quick Start
+
+1. Ensure the Raspberry Pi is on and connected to the internet.
+2. Run `uav/uav.py` from the computer.
+   This will start a simple UI to control the UAV.
+3. In another terminal, run `watchman/receiver.py`.
+   This will start the additional watchman process, which is the key component of the ECA.
+
+This project also comes with automated scripts that will start the system on either the CA or ECA.
+For CA, use `sh ca.sh`; for ECA, use `sh eca.sh`.
 
 ## Attacks
 
 To test the viability of watchman compared to the current architecture used in UAS, some basic attacks were run.
-They are outlined here:
-
-- [Deauthentication Attack](attacks/deauthentication.md)
+An overview and discussion of this can be found [here](attacks/overview.md).

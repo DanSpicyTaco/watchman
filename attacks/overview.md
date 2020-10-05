@@ -1,4 +1,16 @@
-# Watchman Experiments - Overview
+# Watchman Security Analysis - Overview
+
+## Materials
+
+- Attacker setup:
+  - [Kali Linux](https://www.kali.org/downloads/)
+  - ALFA network adapter
+  - [aircrack-ng](https://www.aircrack-ng.org/doku.php?id=Main#download)
+- Current architecture (CA):
+  - [Watchman](../README.md) (`gcs.py`)
+- Watchman (ECA):
+  - [Watchman](../README.md) (`gcs.py` and `receiver.py`)
+  - [Snort](../README.md) (`snort/`)
 
 ## Experimental Procedure
 

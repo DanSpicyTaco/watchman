@@ -14,6 +14,7 @@ git clone git@github.com:DanSpicyTaco/watchman.git watchman
 cd watchman
 pip3 install -e .
 pip3 install -r requirements.txt
+python setup.py install
 
 # Enable the wait for network service
 # This will wait until the network is connected 
