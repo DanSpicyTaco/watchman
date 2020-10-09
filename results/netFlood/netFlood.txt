@@ -1,0 +1,13 @@
+Current Architecture
+1. sh run-ca.sh  0.19s user 0.23s system 1% cpu 38.424 total
+2. sh run-ca.sh  0.22s user 0.27s system 1% cpu 40.333 total
+3. sh run-ca.sh  0.19s user 0.23s system 1% cpu 40.124 total
+4. sh run-ca.sh  0.15s user 0.17s system 0% cpu 38.211 total 
+5. sh run-ca.sh  0.15s user 0.16s system 0% cpu 38.043 total 
+
+Encrypted Channel Architecture
+1. 
+2. 
+3. 
+4. 
+5. 
