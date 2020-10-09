@@ -202,7 +202,7 @@ for host in hosts:
 uav = network.Client((addr, port))
 
 # Automatic method
-if(sys.argv[1] == "-a" or sys.argv[1] == "--automate"):
+if(len(sys.argv) > 1 and (sys.argv[1] == "-a" or sys.argv[1] == "--automate")):
     press_key(uav, 'u', 3)
     press_key(uav, 'f', 10)
     press_key(uav, 'l', 10)
