@@ -1,0 +1,13 @@
+Current Architecture
+1. 0.19s user 0.22s system 1% cpu 39.705 total
+2. 0.17s user 0.20s system 0% cpu 40.527 total
+3. 0.18s user 0.21s system 0% cpu 38.238 total
+4. 
+5. 
+
+Encrypted Channel Architecture
+1. 
+2. 
+3. 
+4. 
+5. 
