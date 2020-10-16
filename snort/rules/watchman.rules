@@ -1,1 +1,1 @@
-alert tcp any any -> $HOME_NET 3030 (flags: S; msg:"Network Flood Attack"; flow: stateless; threshold: type both, track by_src, count 70, seconds 10; sid:10001; rev:1;)
+alert tcp any any -> 192.168.1.110 3030 (flags: S; msg:"Network Flood Attack"; flow: stateless; detection_filter: track by_src, count 10, seconds 5; sid: 100001;)

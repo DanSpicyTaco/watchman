@@ -6,8 +6,8 @@ Current Architecture
 5. sh run-ca.sh  0.15s user 0.16s system 0% cpu 38.043 total 
 
 Encrypted Channel Architecture
-1. 
-2. 
-3. 
-4. 
-5. 
+1. sh run-eca.sh  14.31s user 35.02s system 203% cpu 24.217 total
+2. sh run-eca.sh  17.49s user 42.80s system 203% cpu 29.691 total 
+3. sh run-eca.sh  7.16s user 16.93s system 165% cpu 14.516 total 
+4. sh run-eca.sh  11.00s user 26.15s system 191% cpu 19.367 total 
+5. sh run-eca.sh  10.14s user 26.07s system 181% cpu 19.911 total 
