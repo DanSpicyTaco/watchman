@@ -1,8 +1,6 @@
 # Watchman
 
-<pre align="center">
-   <img src="img/watchman.png">
-</pre>
+![Watchman](img/watchman.svg)
 
 Watchman secures communication between a drone (Unmanned Ariel Vehicle, UAV) and its controller (Ground Control Station, GCS).
 It does this by creating a second, encrypted communication channel, which provides continuos authentication and network intrusion detection.
