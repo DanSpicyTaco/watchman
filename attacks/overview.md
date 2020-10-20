@@ -6,6 +6,8 @@
   - [Kali Linux](https://www.kali.org/downloads/)
   - ALFA network adapter
   - [aircrack-ng](https://www.aircrack-ng.org/doku.php?id=Main#download)
+  - [hping3](https://tools.kali.org/information-gathering/hping3)
+  - [tcpreplay](https://tcpreplay.appneta.com/)
 - Current architecture (CA):
   - [Watchman](../README.md) (`gcs.py`)
 - Watchman (ECA):
@@ -14,16 +16,60 @@
 
 ## Experimental Procedure
 
-1. Find the Snort signature for the IDS and add it to the file
-2. Start the flight plan
-3. Run the attack
-4. Move the logfile from the watchman to the simulation
-5. Repeat 5 times
+1. Setup the current architecture and encrypted channel architecture according to the [README](../README.md).
+2. Run either the `run-ca.sh` or `run-eca.sh` script for an automated flight path.
+3. Run one of the attacks outlined in this directory.
+4. Copy the logfile from the UAV to the GCS for post-experiment analysis.
+5. Repeat the experiment 5 times for validity.
 
 ### Flight Plan
 
 - In order to ensure consistency between experiments, an automated flight path was established
 - The UAV would rise, then fly in a circle (more or less), then land
+
+### Finding Network Channels and MAC Addresses
+
+Some attacks require knowing the MAC address of the Raspberry Pi and the channel the UAV/GCS communication link is on.
+To do this:
+
+1. Connect the ALFA network adapter to the Kali computer.
+   Check that the network adapter is connected by running `iwconfig`.
+   Note the name of the connection - in this case, it is `wlan0`
+   <pre align="center">
+      <img src="img/deauth_iwconfig1.png">
+   </pre>
+
+2. Kill any process that may interfere with the attacks with `airmon-ng check kill`.
+   This may include Wi-Fi processes running for the Linux OS.
+   <pre align="center">
+      <img src="img/deauth_kill.png">
+   </pre>
+
+3. Put the network adapter into _monitor mode_ with `airmon-ng start <NETWORK INTERFACE>`, where network interface is the equivalent of `wlan0`.
+   <pre align="center">
+      <img src="img/deauth_start.png">
+   </pre>
+
+   This will allow the attacker to inject (i.e. send) network packets to other stations.
+   Double check the adapter is in monitor mode by running `iwconfig` again.
+   <pre align="center">
+      <img src="img/deauth_iwconfig2.png">
+   </pre>
+
+4. Find the the access point (AP) of interest with `airodump-ng <NETWORK INTERFACE>`.
+   <pre align="center">
+      <img src="img/deauth_scan.png">
+   </pre>
+   Press `CTRL + C` once the AP has been found.
+   The AP can be identified by the ESSID column, which represents the name of the AP.
+   Note down the BSSID (unique identifier) and channel of the AP.
+5. Now, find the MAC address of the target station (i.e. the Raspberry Pi).
+   Do this by running `airodrump-ng <NETWORK INTERFACE> --bssid <NETWORK BSSID> -c <NETWORK CHANNEL>`.
+   <pre align="center">
+      <img src="img/deauth_pi.png">
+   </pre>
+   Note down the MAC address of the station.
+   For example, MAC addresses starting with _DC-A6-32_ are Raspberry Pis. [Source](https://cleancss.com/mac-lookup/DC-A6-32)
 
 ## Metrics
 
