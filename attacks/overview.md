@@ -8,24 +8,29 @@
   - [aircrack-ng](https://www.aircrack-ng.org/doku.php?id=Main#download)
   - [hping3](https://tools.kali.org/information-gathering/hping3)
   - [tcpreplay](https://tcpreplay.appneta.com/)
+  - Wireshark
 - Current architecture (CA):
   - [Watchman](../README.md) (`gcs.py`)
 - Watchman (ECA):
   - [Watchman](../README.md) (`gcs.py` and `receiver.py`)
   - [Snort](../README.md) (`snort/`)
 
-## Experimental Procedure
+## Methodology
 
 1. Setup the current architecture and encrypted channel architecture according to the [README](../README.md).
-2. Run either the `run-ca.sh` or `run-eca.sh` script for an automated flight path.
-3. Run one of the attacks outlined in this directory.
-4. Copy the logfile from the UAV to the GCS for post-experiment analysis.
-5. Repeat the experiment 5 times for validity.
+2. Find the network channels and mac addresses ([instructions](#finding-network-channels-and-mac-addresses)).
+3. Run either the `run-ca.sh` or `run-eca.sh` script for an automated flight path.
+4. Run one of the [attacks](#attacks).
+5. Copy the logfile from the UAV to the GCS for [post-experiment analysis](#metrics).
+6. Repeat the experiment 5 times for validity.
 
-### Flight Plan
+### Attacks
 
-- In order to ensure consistency between experiments, an automated flight path was established
-- The UAV would rise, then fly in a circle (more or less), then land
+1. [Deauthentication attack](./deauthentication.md)
+2. [Network Flooding attack](./networkFlood.md)
+3. [Brute Force attack](./bruteForce.md)
+4. [Replay attack](./replay.md)
+5. [Captured POI attack](./capturedPOI.md)
 
 ### Finding Network Channels and MAC Addresses
 
@@ -69,9 +74,11 @@ To do this:
       <img src="img/deauth_pi.png">
    </pre>
    Note down the MAC address of the station.
-   For example, MAC addresses starting with _DC-A6-32_ are Raspberry Pis. [Source](https://cleancss.com/mac-lookup/DC-A6-32)
+   For example, MAC addresses starting with _DC:A6:32_ are Raspberry Pis. [Source](https://cleancss.com/mac-lookup/DC-A6-32)
 
-## Metrics
+### Metrics
+
+For post-experiment analysis, the following metrics were measured.
 
 1. Asset capacity: the remainder of the asset after being attacked/compromised
    - Here, we define the asset as the software or hardware that we are trying to protect from attack
@@ -96,19 +103,40 @@ To do this:
 5. Service availability: the availability of a required service to support a particular task
    - Can the UAV still operate after a reboot?
 
-## Analysis
+After calculating the score for each experiment, the attacks were ranked:
 
-- Add the metrics (score/5) for each attempt of each attack
-- Take the average result of each attempt
-- Rank each of the attacks in terms of effectiveness
+1. Add the metrics (score/5) for each attempt of each attack
+2. Take the average result of each attempt
+3. Rank each of the attacks in terms of effectiveness
 
 ## Discussion
 
-- The amount of time taken for the attack was not considered a lot
-- Maybe for the future, we should have that as a bigger thing
+### Attack Discussion
+
+- Validity/repeatability was good - averaged out the discrepancies between attacks by doing it multiple times
+- Flight path was automated and ensured consistency
+  - In order to ensure consistency between experiments, an automated flight path was established
+  - The UAV would rise, then fly in a circle (more or less), then land
+  - Flight path:
+    - Up for 3 sec
+    - Forward for 10 sec
+    - Left for 10 sec
+    - Forward for 10 sec
+    - Down for 3 sec
+
+### Metric Discussion
+
+- Length of attack was not really considered between different cases
+  - E.g. the brute force attack and captured POI attack didn't really have a time limit/measurable attack time
+  - For the future, it should be reconsidered for a more general case
 - Services could have been over-represented
   - Measured the availability, capacity and resilience of the `uav.py` script
   - Capacity was not super relevant to measuring the effectiveness of the attack
 - Network resilience was unfairly weighted towards the watchman architecture
 - To account for this, the battery life, weight and processing power were also considered as separate metrics
 - If the watchman channel was attacked, the system would break
+
+### Overall thoughts
+
+- ECA architecture is good but it needs work
+- It can be improved and tested more, but it might be worth looking into as a viable alternative architecture
